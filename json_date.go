@@ -30,7 +30,8 @@ func (t *Date) UnmarshalJSON(b []byte) error {
 		return fmt.Errorf("%w: failed to unmarshal non-string value %q as an YYYY-MM-dd", ErrJSONDateTime, b)
 	}
 
-	tm, err := time.Parse("2006-01-02", string(b[1:len(b)-1]))
+	now := time.Now()
+	tm, err := time.ParseInLocation("2006-01-02", string(b[1:len(b)-1]), now.Location())
 	if err != nil {
 		return err
 	}
